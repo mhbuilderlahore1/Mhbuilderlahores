@@ -1284,7 +1284,7 @@
 
   async function psLoadPosts(){
     try{
-      const r=await fetch('/api/posts?v='+Date.now());
+      const r = await fetch('https://mh-admin-panel.pages.dev/api/posts?v=' + Date.now());
       const d=await r.json();
       psAllPosts=d.posts||[];
       const counts={};
