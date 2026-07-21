@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>By Owner — MHBuilder Lahore</title>
+<meta name="description" content="Updates posted directly by the owner of MHBuilder Lahore.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,'Segoe UI',Roboto,sans-serif; background:#1a1a1a; color:#e8e8e8; min-height:100vh; }
+  .topbar { background:#202124; padding:14px 18px; border-bottom:1px solid #3c3c3c; display:flex; align-items:center; gap:12px; }
+  .topbar a { color:#8ab4f8; text-decoration:none; font-size:14px; }
+  h1 { font-size:18px; font-weight:700; padding:16px; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 16px 40px; }
+  .profile-card { background:#303134; border-radius:12px; padding:18px; border:1px solid #3c3c3c; margin-bottom:16px; display:flex; align-items:center; gap:14px; }
+  .profile-card .name { font-size:16px; font-weight:700; color:#fff; }
+  .profile-card .verified { font-size:12px; color:#81c995; margin-top:2px; }
+  .update-card { background:#303134; border-radius:12px; padding:14px; border:1px solid #3c3c3c; margin-bottom:12px; }
+  .update-card img { width:100%; border-radius:8px; margin-bottom:10px; }
+  .update-date { font-size:11px; color:#b8bfc9; margin-bottom:6px; }
+  .update-content { font-size:13px; color:#bdc1c6; line-height:1.6; }
+  .loading, .error { padding:40px 0; text-align:center; color:#9aa0a6; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="topbar"><a href="index.html">‹ Back to Home</a></div>
+<h1>By Owner</h1>
+<div class="wrap">
+  <div class="profile-card">
+    <div style="width:50px;height:50px;border-radius:50%;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:#202124;">M</div>
+    <div>
+      <div class="name">MHBuilder Lahore</div>
+      <div class="verified">✓ Verified Owner</div>
+    </div>
+  </div>
+  <div id="updatesList"><div class="loading">Loading updates...</div></div>
+</div>
+
+<script>
+  async function loadUpdates() {
+    const el = document.getElementById('updatesList');
+    try {
+      const res = await fetch('/api/owner-updates');
+      const data = await res.json();
+      const items = data.updates || [];
+      if (!items.length) { el.innerHTML = '<div class="error">No updates yet.</div>'; return; }
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      el.innerHTML = items.map(u => {
+        const d = new Date(u.created_at);
+        const dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+        return `<div class="update-card">
+          ${u.image_url ? `<img src="${u.image_url}" alt="" loading="lazy">` : ''}
+          <div class="update-date">📅 ${dateStr}</div>
+          <div class="update-content">${u.content}</div>
+        </div>`;
+      }).join('');
+    } catch (e) {
+      el.innerHTML = '<div class="error">Could not load updates.</div>';
+    }
+  }
+  loadUpdates();
+</script>
+</body>
+</html>
