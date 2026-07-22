@@ -21,6 +21,7 @@
     cursor:pointer;
     display:block;
 }
+
   .loading { padding:40px 16px; text-align:center; color:#9aa0a6; font-size:14px; }
 
   #photoLightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:500; }
@@ -33,6 +34,33 @@
   .lightbox-info .category { font-size:12px; color:#8ab4f8; margin-bottom:8px; }
   .lightbox-info .content { font-size:13px; color:#bdc1c6; line-height:1.6; }
   .share-btn { margin-top:12px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:12px; padding:8px 14px; border-radius:16px; }
+@media (max-width:768px){
+
+.photos-full{
+    padding:0 12px 30px;
+    gap:16px;
+}
+
+.photos-full img{
+    width:100%;
+    aspect-ratio:1/1;
+}
+
+}
+
+@media (min-width:1200px){
+
+.photos-full{
+    max-width:1800px;
+    margin:auto;
+}
+
+.photos-full img{
+    width:100%;
+    aspect-ratio:1/1;
+}
+
+}
 </style>
 </head>
 <body>
